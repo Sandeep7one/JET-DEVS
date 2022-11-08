@@ -10,7 +10,7 @@ import {
   ContainerRightUserImage,
   ContainerRightUserName,
   ContainerUser,
-} from "./style";
+} from "./style/style";
 
 interface IAppData {}
 
