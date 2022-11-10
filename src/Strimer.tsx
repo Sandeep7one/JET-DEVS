@@ -1,5 +1,4 @@
 import * as React from "react";
-import { lists } from "./@types/lists";
 import jetDevs from "./MockData/MockData.json";
 import {
   Container,
@@ -15,30 +14,24 @@ import {
 interface IAppData {}
 
 const Strimer: React.FunctionComponent<IAppData> = () => {
-  const [lists, setLists] = React.useState(jetDevs);
+  const [count, setCount] = React.useState(15);
+  const [lists, setLists] = React.useState(
+    jetDevs.sort((a, b) => {
+      return a.score + b.score;
+    })
+  );
 
-  const swipingList = () => {
-    let arrays: any = lists.length,
-      temp,
-      index;
-    while (arrays > 0) {
-      index = Math.floor(Math.random() * arrays);
-      arrays--;
-
-      // Swiping Lists
-      temp = lists[arrays];
-      lists[arrays] = arrays[index];
-      arrays[index] = temp;
-    }
-    return lists;
+  const TimeInterVal = () => {
+    setInterval(() => {
+      setCount(count + 10);
+      setLists(lists);
+    }, 2000);
   };
-  // const arraySwiping = swipingList(jetDevs);
-  // setLists(arraySwiping)
-  // React.useEffect(() => {
-  //   // swipingList()
-  //   // const arraySwiping = swipingList(jetDevs);
-  //   setLists(jetDevs);
-  // }, []);
+  
+  React.useEffect(() => {
+    TimeInterVal();
+  }, []);
+
   return (
     <Container>
       {lists.map((jetDev) => {
@@ -53,7 +46,7 @@ const Strimer: React.FunctionComponent<IAppData> = () => {
             </ContainerRight>
             <ContainerLeft>
               <ContainerLeftScore title="Point">
-                {jetDev.score}pt
+                {jetDev.score * 0.5 * count}pt
               </ContainerLeftScore>
             </ContainerLeft>
           </ContainerUser>
